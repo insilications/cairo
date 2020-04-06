@@ -4,7 +4,7 @@
 #
 Name     : cairo
 Version  : 1.16.0
-Release  : 66
+Release  : 67
 URL      : https://www.cairographics.org/releases/cairo-1.16.0.tar.xz
 Source0  : https://www.cairographics.org/releases/cairo-1.16.0.tar.xz
 Summary  : Multi-platform 2D graphics library
@@ -139,6 +139,7 @@ license components for the cairo package.
 
 %prep
 %setup -q -n cairo-1.16.0
+cd %{_builddir}/cairo-1.16.0
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -152,14 +153,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568830920
+export SOURCE_DATE_EPOCH=1586211230
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static --disable-gtk-doc --enable-xlib=yes --enable-xcb=yes --enable-ft=yes --enable-fc=yes --enable-gl --enable-xlib-xcb
 make  %{?_smp_mflags}
@@ -174,17 +175,17 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1568830920
+export SOURCE_DATE_EPOCH=1586211230
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cairo
-cp COPYING-LGPL-2.1 %{buildroot}/usr/share/package-licenses/cairo/COPYING-LGPL-2.1
-cp COPYING-MPL-1.1 %{buildroot}/usr/share/package-licenses/cairo/COPYING-MPL-1.1
-cp perf/COPYING %{buildroot}/usr/share/package-licenses/cairo/perf_COPYING
-cp test/COPYING %{buildroot}/usr/share/package-licenses/cairo/test_COPYING
-cp test/pdiff/gpl.txt %{buildroot}/usr/share/package-licenses/cairo/test_pdiff_gpl.txt
-cp util/cairo-script/COPYING %{buildroot}/usr/share/package-licenses/cairo/util_cairo-script_COPYING
-cp util/cairo-trace/COPYING %{buildroot}/usr/share/package-licenses/cairo/util_cairo-trace_COPYING
-cp util/cairo-trace/COPYING-GPL-3 %{buildroot}/usr/share/package-licenses/cairo/util_cairo-trace_COPYING-GPL-3
+cp %{_builddir}/cairo-1.16.0/COPYING-LGPL-2.1 %{buildroot}/usr/share/package-licenses/cairo/8088b44375ef05202c0fca4e9e82d47591563609
+cp %{_builddir}/cairo-1.16.0/COPYING-MPL-1.1 %{buildroot}/usr/share/package-licenses/cairo/aba8d76d0af67d57da3c3c321caa59f3d242386b
+cp %{_builddir}/cairo-1.16.0/perf/COPYING %{buildroot}/usr/share/package-licenses/cairo/2cc384b53d50baa25a960aa83b0ac0edca682fa7
+cp %{_builddir}/cairo-1.16.0/test/COPYING %{buildroot}/usr/share/package-licenses/cairo/a4233e56493311ffd59845410b6e156f03b07335
+cp %{_builddir}/cairo-1.16.0/test/pdiff/gpl.txt %{buildroot}/usr/share/package-licenses/cairo/9a13113b89f7985efe22a28b8e4ad1ace7f2b5d1
+cp %{_builddir}/cairo-1.16.0/util/cairo-script/COPYING %{buildroot}/usr/share/package-licenses/cairo/d888f729a340181e37b0b2fb25c2942d5005e6a2
+cp %{_builddir}/cairo-1.16.0/util/cairo-trace/COPYING %{buildroot}/usr/share/package-licenses/cairo/0315f8fa18770a489890f8448111722aca24b8ec
+cp %{_builddir}/cairo-1.16.0/util/cairo-trace/COPYING-GPL-3 %{buildroot}/usr/share/package-licenses/cairo/8624bcdae55baeef00cd11d5dfcfa60f68710a02
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -372,11 +373,11 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/cairo/COPYING-LGPL-2.1
-/usr/share/package-licenses/cairo/COPYING-MPL-1.1
-/usr/share/package-licenses/cairo/perf_COPYING
-/usr/share/package-licenses/cairo/test_COPYING
-/usr/share/package-licenses/cairo/test_pdiff_gpl.txt
-/usr/share/package-licenses/cairo/util_cairo-script_COPYING
-/usr/share/package-licenses/cairo/util_cairo-trace_COPYING
-/usr/share/package-licenses/cairo/util_cairo-trace_COPYING-GPL-3
+/usr/share/package-licenses/cairo/0315f8fa18770a489890f8448111722aca24b8ec
+/usr/share/package-licenses/cairo/2cc384b53d50baa25a960aa83b0ac0edca682fa7
+/usr/share/package-licenses/cairo/8088b44375ef05202c0fca4e9e82d47591563609
+/usr/share/package-licenses/cairo/8624bcdae55baeef00cd11d5dfcfa60f68710a02
+/usr/share/package-licenses/cairo/9a13113b89f7985efe22a28b8e4ad1ace7f2b5d1
+/usr/share/package-licenses/cairo/a4233e56493311ffd59845410b6e156f03b07335
+/usr/share/package-licenses/cairo/aba8d76d0af67d57da3c3c321caa59f3d242386b
+/usr/share/package-licenses/cairo/d888f729a340181e37b0b2fb25c2942d5005e6a2
