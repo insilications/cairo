@@ -4,7 +4,7 @@
 #
 Name     : cairo
 Version  : 1.16.0
-Release  : 68
+Release  : 69
 URL      : https://www.cairographics.org/releases/cairo-1.16.0.tar.xz
 Source0  : https://www.cairographics.org/releases/cairo-1.16.0.tar.xz
 Summary  : Multi-platform 2D graphics library
@@ -108,7 +108,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1600284869
+export SOURCE_DATE_EPOCH=1600296481
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -121,7 +121,7 @@ export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -f
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1600284869
+export SOURCE_DATE_EPOCH=1600296481
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cairo
 cp %{_builddir}/cairo-1.16.0/COPYING-LGPL-2.1 %{buildroot}/usr/share/package-licenses/cairo/8088b44375ef05202c0fca4e9e82d47591563609

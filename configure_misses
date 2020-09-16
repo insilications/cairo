@@ -28,7 +28,6 @@ Configure miss: whether cairo's Microsoft Windows surface backend feature could 
 Configure miss: whether cairo's Microsoft Windows font backend feature could be enabled
 Configure miss: whether cairo's WGL functions feature could be enabled
 Configure miss: gs
-Configure miss: LIBSPECTRE
 Configure miss: POPPLER
 Configure miss: LIBRSVG
 Configure miss: bfd.h usability
