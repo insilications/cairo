@@ -5,17 +5,7 @@
 libpng-dev
 libjpeg-turbo-dev
 libXrender-dev
-zlib-dev32
-libpng-dev32
-libjpeg-turbo-dev32
-libXrender-dev32
-libxcb-dev32
 libxcb-dev
-freetype-dev32
-librsvg-dev32
 librsvg-dev
-glib-dev32
-mesa-dev32
 mesa-dev
 systemd-dev
-systemd-dev32
