@@ -15,7 +15,17 @@ BuildRequires : binutils-dev
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-configure
 BuildRequires : buildreq-meson
+BuildRequires : dbus
+BuildRequires : dbus-broker
+BuildRequires : dbus-dev
+BuildRequires : dbus-glib
+BuildRequires : dbus-glib-dev
 BuildRequires : docbook-xml
+BuildRequires : glib-dev
+BuildRequires : glib-lib
+BuildRequires : glib-staticdev
+BuildRequires : gobject-introspection
+BuildRequires : gobject-introspection-dev
 BuildRequires : grep
 BuildRequires : gtk+-data
 BuildRequires : gtk+-lib
@@ -26,7 +36,12 @@ BuildRequires : gtk3-lib
 BuildRequires : gtk4
 BuildRequires : gtk4-dev
 BuildRequires : gtk4-lib
+BuildRequires : libX11-data
+BuildRequires : libX11-dev
+BuildRequires : libX11-lib
 BuildRequires : libXrender-dev
+BuildRequires : libdrm-dev
+BuildRequires : libdrm-staticdev
 BuildRequires : libjpeg-turbo-dev
 BuildRequires : libjpeg-turbo-staticdev
 BuildRequires : libpng-dev
@@ -46,7 +61,74 @@ BuildRequires : pkgconfig(pixman-1)
 BuildRequires : pkgconfig(valgrind)
 BuildRequires : pkgconfig(x11)
 BuildRequires : pkgconfig(xext)
+BuildRequires : qca-qt5
+BuildRequires : qca-qt5-dev
+BuildRequires : qt3d
+BuildRequires : qt3d-dev
+BuildRequires : qt5ct
+BuildRequires : qtbase
+BuildRequires : qtbase-dev
+BuildRequires : qtbase-extras
+BuildRequires : qtdatavis3d
+BuildRequires : qtdatavis3d-dev
+BuildRequires : qtdeclarative
+BuildRequires : qtdeclarative-dev
+BuildRequires : qtgraphicaleffects
+BuildRequires : qtimageformats
+BuildRequires : qtlocation
+BuildRequires : qtlocation-dev
+BuildRequires : qtmqtt
+BuildRequires : qtmqtt-dev
+BuildRequires : qtmultimedia
+BuildRequires : qtmultimedia-dev
+BuildRequires : qtnetworkauth
+BuildRequires : qtnetworkauth-dev
+BuildRequires : qtsvg
+BuildRequires : qtsvg-dev
+BuildRequires : qttools
+BuildRequires : qttools-dev
+BuildRequires : qttranslations
+BuildRequires : qtwayland
+BuildRequires : qtwayland-dev
+BuildRequires : qtx11extras
+BuildRequires : qtx11extras-dev
+BuildRequires : qtxmlpatterns
+BuildRequires : qtxmlpatterns-dev
 BuildRequires : systemd-dev
+BuildRequires : xauth
+BuildRequires : xcb-proto
+BuildRequires : xcb-proto-dev
+BuildRequires : xcb-util-cursor-dev
+BuildRequires : xcb-util-dev
+BuildRequires : xcb-util-keysyms-dev
+BuildRequires : xcb-util-renderutil-dev
+BuildRequires : xcb-util-wm-dev
+BuildRequires : xcb-util-xrm-dev
+BuildRequires : xclip
+BuildRequires : xdg-dbus-proxy
+BuildRequires : xdg-desktop-portal
+BuildRequires : xdg-desktop-portal-dev
+BuildRequires : xdg-desktop-portal-gtk
+BuildRequires : xdg-desktop-portal-kde
+BuildRequires : xdg-user-dirs
+BuildRequires : xdg-user-dirs-gtk
+BuildRequires : xdg-utils
+BuildRequires : xdotool
+BuildRequires : xdpyinfo
+BuildRequires : xf86-input-libinput
+BuildRequires : xf86-video-amdgpu
+BuildRequires : xf86-video-ati
+BuildRequires : xf86-video-fbdev
+BuildRequires : xf86-video-nouveau
+BuildRequires : xf86-video-qxl
+BuildRequires : xf86-video-vboxvideo
+BuildRequires : xf86-video-vesa
+BuildRequires : xf86-video-vmware
+BuildRequires : zlib
+BuildRequires : zlib-dev
+BuildRequires : zlib-staticdev
+BuildRequires : zstd-dev
+BuildRequires : zstd-staticdev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
@@ -80,7 +162,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1623067136
+export SOURCE_DATE_EPOCH=1623067689
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -142,7 +224,23 @@ export CXXFLAGS="${CXXFLAGS_GENERATE}"
 export FFLAGS="${FFLAGS_GENERATE}"
 export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
- %configure --disable-gtk-doc --enable-xlib=yes --enable-xcb=yes --enable-ft=yes --enable-fc=yes --enable-gl --enable-xlib-xcb
+ %configure --enable-shared \
+--enable-static \
+--disable-gtk-doc \
+--enable-xlib=yes \
+--enable-xcb=yes \
+--enable-ft=yes \
+--enable-fc=yes \
+--enable-gl=yes \
+--enable-egl=yes \
+--enable-glx=yes \
+--enable-xlib-xcb=yes \
+--enable-xcb-shm=yes \
+--enable-qt=yes \
+--enable-png=yes \
+--enable-glesv2=yes \
+--enable-glesv3=yes \
+--enable-gobject=yes
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 
 make %{?_smp_mflags} check VERBOSE=1 V=1 || :
@@ -156,13 +254,29 @@ export CXXFLAGS="${CXXFLAGS_USE}"
 export FFLAGS="${FFLAGS_USE}"
 export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
-%configure --disable-gtk-doc --enable-xlib=yes --enable-xcb=yes --enable-ft=yes --enable-fc=yes --enable-gl --enable-xlib-xcb
+%configure --enable-shared \
+--enable-static \
+--disable-gtk-doc \
+--enable-xlib=yes \
+--enable-xcb=yes \
+--enable-ft=yes \
+--enable-fc=yes \
+--enable-gl=yes \
+--enable-egl=yes \
+--enable-glx=yes \
+--enable-xlib-xcb=yes \
+--enable-xcb-shm=yes \
+--enable-qt=yes \
+--enable-png=yes \
+--enable-glesv2=yes \
+--enable-glesv3=yes \
+--enable-gobject=yes
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 fi
 
 
 %install
-export SOURCE_DATE_EPOCH=1623067136
+export SOURCE_DATE_EPOCH=1623067689
 rm -rf %{buildroot}
 %make_install
 
