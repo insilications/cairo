@@ -1,1 +1,2 @@
 make %{?_smp_mflags} check VERBOSE=1 V=1 || :
+make distclean || :

@@ -1,0 +1,25 @@
+From 2226dd4b4ba05ce0f7adebd7c1b39c9c96445af0 Mon Sep 17 00:00:00 2001
+From: Francisco Boni <boboniboni@gmail.com>
+Date: Mon, 7 Jun 2021 10:06:19 -0300
+Subject: [PATCH] Use gcc-nm
+
+---
+ src/check-def.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/check-def.sh b/src/check-def.sh
+index beefb46a3..cd0d0177e 100755
+--- a/src/check-def.sh
++++ b/src/check-def.sh
+@@ -23,7 +23,7 @@ fi
+ if [ "`uname -s`" = "Linux" ]; then
+ 	get_cairo_syms='( objdump -t "$so" | grep "^[^ ]* [^l.*]*[.]"; objdump -t "$so" | grep "[.]hidden.*\\<cairo"; ) | sed "s/.* //"'
+ else
+-	get_cairo_syms='nm "$so" | grep " [BCDGINRSTVW] " | cut -d" " -f3'
++	get_cairo_syms='gcc-nm "$so" | grep " [BCDGINRSTVW] " | cut -d" " -f3'
+ fi
+ 
+ defs="cairo.def"
+-- 
+2.31.1
+

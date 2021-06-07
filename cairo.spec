@@ -107,7 +107,7 @@ Patch2: CVE-2019-6461.patch
 Patch3: CVE-2019-6462.patch
 Patch4: cairo-respect-fontconfig.patch
 Patch5: 0001-Set-default-LCD-filter-to-FreeType-s-default.patch
-Patch6: cairo-composite_color_glyphs.patch
+Patch6: 0001-Use-gcc-nm.patch
 
 %description
 Cairo - Multi-platform 2D graphics library
@@ -136,7 +136,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1623070883
+export SOURCE_DATE_EPOCH=1623071579
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -219,7 +219,9 @@ export LDFLAGS="${LDFLAGS_GENERATE}"
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 
 make %{?_smp_mflags} check VERBOSE=1 V=1 || :
-make clean
+exit 1
+make distclean || :
+make clean || :
 echo USED > statuspgo
 fi
 if [ -f statuspgo ]; then
@@ -250,7 +252,7 @@ fi
 
 
 %install
-export SOURCE_DATE_EPOCH=1623070883
+export SOURCE_DATE_EPOCH=1623071579
 rm -rf %{buildroot}
 %make_install
 
