@@ -1,3 +1,10 @@
---disable-gtk-doc --enable-xlib=yes --enable-xcb=yes --enable-ft=yes --enable-fc=yes --enable-gl --enable-xlib-xcb
-
-
+--enable-shared
+--enable-static
+--disable-gtk-doc
+--enable-xlib=yes
+--enable-xcb=yes
+--enable-ft=yes
+--enable-fc=yes
+--enable-gl=yes
+--enable-xlib-xcb=yes
+--enable-qt=yes

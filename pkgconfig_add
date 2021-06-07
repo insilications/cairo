@@ -7,3 +7,10 @@ x11
 xext
 pixman-1
 ice
+fontconfig
+glib-2.0
+ice
+pixman-1
+valgrind
+x11
+xext

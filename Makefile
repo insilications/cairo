@@ -1,5 +1,6 @@
 PKG_NAME := cairo
-URL = https://www.cairographics.org/releases/cairo-1.16.0.tar.xz
+URL = https://gitlab.freedesktop.org/cairo/cairo.git
 ARCHIVES = 
+ARCHIVES_GIT = 
 
 include ../common/Makefile.common
