@@ -47,6 +47,8 @@ glib-lib
 glib-staticdev
 gobject-introspection
 gobject-introspection-dev
+graphviz
+graphviz-dev
 grep
 gtk3-dev
 gtk3-lib
@@ -54,10 +56,10 @@ gtk4
 gtk4-dev
 gtk4-lib
 gtk+-data
+gtk+-dev
 gtk-doc
 gtk-doc-dev
 gtk+-lib
-gtk+-dev
 libdrm-dev
 libdrm-staticdev
 libjpeg-turbo-dev
@@ -79,6 +81,7 @@ mesa-dev
 pixman-dev
 pixman-staticdev
 pkg-config
+python-graphviz
 systemd-dev
 xauth
 xcb-proto
