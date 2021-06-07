@@ -1,4 +1,9 @@
 madvise.patch
 CVE-2019-6461.patch
 CVE-2019-6462.patch
-CVE-2018-19876.patch
+#CVE-2018-19876.patch
+cairo-respect-fontconfig.patch
+0001-Set-default-LCD-filter-to-FreeType-s-default.patch
+#125.patch
+#cairo-pdf-add-missing-flush.patch
+#cairo-composite_color_glyphs.patch

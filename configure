@@ -10,8 +10,7 @@
 --enable-glx=yes
 --enable-xlib-xcb=yes
 --enable-xcb-shm=yes
---enable-qt=yes
+--enable-qt=no
 --enable-png=yes
---enable-glesv2=yes
---enable-glesv3=yes
+--enable-pthread=yes
 --enable-test-surfaces=yes

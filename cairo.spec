@@ -13,7 +13,6 @@ Group    : Development/Tools
 License  : GPL-3.0 LGPL-2.0 LGPL-2.1 MPL-1.1
 BuildRequires : binutils-dev
 BuildRequires : buildreq-cmake
-BuildRequires : buildreq-configure
 BuildRequires : buildreq-meson
 BuildRequires : dbus
 BuildRequires : dbus-broker
@@ -21,6 +20,7 @@ BuildRequires : dbus-dev
 BuildRequires : dbus-glib
 BuildRequires : dbus-glib-dev
 BuildRequires : docbook-xml
+BuildRequires : ghostscript
 BuildRequires : glib-dev
 BuildRequires : glib-lib
 BuildRequires : glib-staticdev
@@ -50,6 +50,9 @@ BuildRequires : librsvg-dev
 BuildRequires : librsvg-staticdev
 BuildRequires : libxcb-dev
 BuildRequires : libxslt-bin
+BuildRequires : lzo
+BuildRequires : lzo-dev
+BuildRequires : lzo-staticdev
 BuildRequires : mesa-dev
 BuildRequires : pixman-dev
 BuildRequires : pixman-staticdev
@@ -61,39 +64,6 @@ BuildRequires : pkgconfig(pixman-1)
 BuildRequires : pkgconfig(valgrind)
 BuildRequires : pkgconfig(x11)
 BuildRequires : pkgconfig(xext)
-BuildRequires : qca-qt5
-BuildRequires : qca-qt5-dev
-BuildRequires : qt3d
-BuildRequires : qt3d-dev
-BuildRequires : qt5ct
-BuildRequires : qtbase
-BuildRequires : qtbase-dev
-BuildRequires : qtbase-extras
-BuildRequires : qtdatavis3d
-BuildRequires : qtdatavis3d-dev
-BuildRequires : qtdeclarative
-BuildRequires : qtdeclarative-dev
-BuildRequires : qtgraphicaleffects
-BuildRequires : qtimageformats
-BuildRequires : qtlocation
-BuildRequires : qtlocation-dev
-BuildRequires : qtmqtt
-BuildRequires : qtmqtt-dev
-BuildRequires : qtmultimedia
-BuildRequires : qtmultimedia-dev
-BuildRequires : qtnetworkauth
-BuildRequires : qtnetworkauth-dev
-BuildRequires : qtsvg
-BuildRequires : qtsvg-dev
-BuildRequires : qttools
-BuildRequires : qttools-dev
-BuildRequires : qttranslations
-BuildRequires : qtwayland
-BuildRequires : qtwayland-dev
-BuildRequires : qtx11extras
-BuildRequires : qtx11extras-dev
-BuildRequires : qtxmlpatterns
-BuildRequires : qtxmlpatterns-dev
 BuildRequires : systemd-dev
 BuildRequires : xauth
 BuildRequires : xcb-proto
@@ -135,7 +105,9 @@ BuildRequires : zstd-staticdev
 Patch1: madvise.patch
 Patch2: CVE-2019-6461.patch
 Patch3: CVE-2019-6462.patch
-Patch4: CVE-2018-19876.patch
+Patch4: cairo-respect-fontconfig.patch
+Patch5: 0001-Set-default-LCD-filter-to-FreeType-s-default.patch
+Patch6: cairo-composite_color_glyphs.patch
 
 %description
 Cairo - Multi-platform 2D graphics library
@@ -155,6 +127,8 @@ cd %{_builddir}/cairo
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 unset http_proxy
@@ -162,7 +136,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1623067689
+export SOURCE_DATE_EPOCH=1623070883
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -170,11 +144,11 @@ export NM=gcc-nm
 ## altflags_pgo content
 ## pgo generate
 export PGO_GEN="-fprofile-generate=/var/tmp/pgo -fprofile-dir=/var/tmp/pgo -fprofile-abs-path -fprofile-update=atomic -fprofile-arcs -ftest-coverage --coverage -fprofile-partial-training"
-export CFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
-export FCFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
-export FFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
-export CXXFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -fvisibility-inlines-hidden -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
-export LDFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -lpthread -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
+export CFLAGS_GENERATE="-g -O3 -Wl,--as-needed --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables -pthread -static-libstdc++ -static-libgcc $PGO_GEN"
+export FCFLAGS_GENERATE="-g -O3 -Wl,--as-needed --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
+export FFLAGS_GENERATE="-g -O3 -Wl,--as-needed --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
+export CXXFLAGS_GENERATE="-g -O3 -Wl,--as-needed --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -fvisibility-inlines-hidden -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
+export LDFLAGS_GENERATE="-g -O3 -Wl,--as-needed --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables -pthread -static-libstdc++ -static-libgcc -lpthread $PGO_GEN"
 ## pgo use
 ## -ffat-lto-objects -fno-PIE -fno-PIE -m64 -no-pie -fPIC -Wl,-z,max-page-size=0x1000 -fvisibility=hidden -flto-partition=none
 ## gcc: -feliminate-unused-debug-types -fipa-pta -flto=16 -Wno-error -Wp,-D_REENTRANT -fno-common -funroll-loops
@@ -217,6 +191,8 @@ export PATH="$PATH:/usr/local/cuda/bin:/usr/nvidia/bin:/usr/bin/haswell:/usr/bin
 export CPATH="$CPATH:/usr/local/cuda/include"
 #
 ## altflags_pgo end
+sd -r '\s--dirty\s' ' ' .
+sd -r 'git describe' 'git describe --abbrev=0' .
 if [ ! -f statuspgo ]; then
 echo PGO Phase 1
 export CFLAGS="${CFLAGS_GENERATE}"
@@ -224,7 +200,7 @@ export CXXFLAGS="${CXXFLAGS_GENERATE}"
 export FFLAGS="${FFLAGS_GENERATE}"
 export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
- %configure --enable-shared \
+%autogen --enable-shared \
 --enable-static \
 --disable-gtk-doc \
 --enable-xlib=yes \
@@ -236,11 +212,10 @@ export LDFLAGS="${LDFLAGS_GENERATE}"
 --enable-glx=yes \
 --enable-xlib-xcb=yes \
 --enable-xcb-shm=yes \
---enable-qt=yes \
+--enable-qt=no \
 --enable-png=yes \
---enable-glesv2=yes \
---enable-glesv3=yes \
---enable-gobject=yes
+--enable-pthread=yes \
+--enable-test-surfaces=yes
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 
 make %{?_smp_mflags} check VERBOSE=1 V=1 || :
@@ -254,7 +229,7 @@ export CXXFLAGS="${CXXFLAGS_USE}"
 export FFLAGS="${FFLAGS_USE}"
 export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
-%configure --enable-shared \
+%autogen --enable-shared \
 --enable-static \
 --disable-gtk-doc \
 --enable-xlib=yes \
@@ -266,17 +241,16 @@ export LDFLAGS="${LDFLAGS_USE}"
 --enable-glx=yes \
 --enable-xlib-xcb=yes \
 --enable-xcb-shm=yes \
---enable-qt=yes \
+--enable-qt=no \
 --enable-png=yes \
---enable-glesv2=yes \
---enable-glesv3=yes \
---enable-gobject=yes
+--enable-pthread=yes \
+--enable-test-surfaces=yes
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 fi
 
 
 %install
-export SOURCE_DATE_EPOCH=1623067689
+export SOURCE_DATE_EPOCH=1623070883
 rm -rf %{buildroot}
 %make_install
 
