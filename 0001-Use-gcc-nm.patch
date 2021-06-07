@@ -1,14 +1,16 @@
-From 2226dd4b4ba05ce0f7adebd7c1b39c9c96445af0 Mon Sep 17 00:00:00 2001
+From fea2d452ec0285f130d96be7325fc4f7107f8ed1 Mon Sep 17 00:00:00 2001
 From: Francisco Boni <boboniboni@gmail.com>
 Date: Mon, 7 Jun 2021 10:06:19 -0300
 Subject: [PATCH] Use gcc-nm
 
 ---
- src/check-def.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ src/check-def.sh                              |  4 ++--
+ util/cairo-script/cairo-script-interpreter.pc | 10 ++++++++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+ create mode 100644 util/cairo-script/cairo-script-interpreter.pc
 
 diff --git a/src/check-def.sh b/src/check-def.sh
-index beefb46a3..cd0d0177e 100755
+index beefb46a3..f23341216 100755
 --- a/src/check-def.sh
 +++ b/src/check-def.sh
 @@ -23,7 +23,7 @@ fi
@@ -20,6 +22,31 @@ index beefb46a3..cd0d0177e 100755
  fi
  
  defs="cairo.def"
+@@ -39,7 +39,7 @@ for def in $defs; do
+ 
+ 	{
+ 		echo EXPORTS
+-		eval $get_cairo_syms | c++filt --no-params | grep -v '^_cairo_test_\|^_fini\|^_init\|^_save[fg]pr\|^_rest[fg]pr\|^_Z\|^__gnu\|^__bss\|^_edata\|^_end' | sort -u
++		eval $get_cairo_syms | c++filt --no-params | grep -v '^_cairo_test_\|^_fini\|^_init\|^_save[fg]pr\|^_rest[fg]pr\|^_Z\|^__gnu\|^__bss\|^_edata\|^_end\|^__gcov\|^_cairo_gl_degrade' | sort -u
+ 		# cheat: copy the last line from the def file!
+ 		tail -n1 "$def"
+ 	} | diff "$def" - >&2 || stat=1
+diff --git a/util/cairo-script/cairo-script-interpreter.pc b/util/cairo-script/cairo-script-interpreter.pc
+new file mode 100644
+index 000000000..70d64000b
+--- /dev/null
++++ b/util/cairo-script/cairo-script-interpreter.pc
+@@ -0,0 +1,10 @@
++prefix=/usr/local
++libdir=${exec_prefix}/lib
++includedir=${prefix}/include
++
++Name: cairo-script-interpreter
++Description: script surface backend for cairo graphics library
++Version: 1.17.4
++Requires: cairo
++Libs: -L${libdir} -lcairo-script-interpreter
++Cflags: -I${includedir}/cairo
 -- 
 2.31.1
 

@@ -7,6 +7,5 @@
 --enable-fc=yes
 --enable-gl=yes
 --enable-xlib-xcb=yes
---enable-qt=no
 --enable-pthread=yes
 --enable-test-surfaces=yes

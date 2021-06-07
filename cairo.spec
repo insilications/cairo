@@ -11,6 +11,8 @@ Source0  : file:///aot/build/clearlinux/packages/cairo/cairo-v1.17.4.tar.gz
 Summary  : Multi-platform 2D graphics library
 Group    : Development/Tools
 License  : GPL-3.0 LGPL-2.0 LGPL-2.1 MPL-1.1
+Requires: cairo-bin = %{version}-%{release}
+Requires: cairo-lib = %{version}-%{release}
 BuildRequires : binutils-dev
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-meson
@@ -28,6 +30,7 @@ BuildRequires : gobject-introspection
 BuildRequires : gobject-introspection-dev
 BuildRequires : grep
 BuildRequires : gtk+-data
+BuildRequires : gtk+-dev
 BuildRequires : gtk+-lib
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
@@ -120,6 +123,43 @@ System (via both Xlib and XCB), quartz, win32, and image buffers,
 as well as PDF, PostScript, and SVG file output. Experimental backends
 include OpenGL, BeOS, OS/2, and DirectFB.
 
+%package bin
+Summary: bin components for the cairo package.
+Group: Binaries
+
+%description bin
+bin components for the cairo package.
+
+
+%package dev
+Summary: dev components for the cairo package.
+Group: Development
+Requires: cairo-lib = %{version}-%{release}
+Requires: cairo-bin = %{version}-%{release}
+Provides: cairo-devel = %{version}-%{release}
+Requires: cairo = %{version}-%{release}
+
+%description dev
+dev components for the cairo package.
+
+
+%package lib
+Summary: lib components for the cairo package.
+Group: Libraries
+
+%description lib
+lib components for the cairo package.
+
+
+%package staticdev
+Summary: staticdev components for the cairo package.
+Group: Default
+Requires: cairo-dev = %{version}-%{release}
+
+%description staticdev
+staticdev components for the cairo package.
+
+
 %prep
 %setup -q -n cairo
 cd %{_builddir}/cairo
@@ -136,7 +176,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1623071579
+export SOURCE_DATE_EPOCH=1623074610
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -153,11 +193,11 @@ export LDFLAGS_GENERATE="-g -O3 -Wl,--as-needed --param=lto-max-streaming-parall
 ## -ffat-lto-objects -fno-PIE -fno-PIE -m64 -no-pie -fPIC -Wl,-z,max-page-size=0x1000 -fvisibility=hidden -flto-partition=none
 ## gcc: -feliminate-unused-debug-types -fipa-pta -flto=16 -Wno-error -Wp,-D_REENTRANT -fno-common -funroll-loops
 export PGO_USE="-fprofile-use=/var/tmp/pgo -fprofile-dir=/var/tmp/pgo -fprofile-abs-path -fprofile-correction -fprofile-partial-training"
-export CFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
-export FCFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
-export FFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
-export CXXFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
-export LDFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -lpthread $PGO_USE"
+export CFLAGS_USE="-Wno-coverage-mismatch -Wno-missing-profile -g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export FCFLAGS_USE="-Wno-coverage-mismatch -Wno-missing-profile -g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export FFLAGS_USE="-Wno-coverage-mismatch -Wno-missing-profile -g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export CXXFLAGS_USE="-Wno-coverage-mismatch -Wno-missing-profile -g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export LDFLAGS_USE="-Wno-coverage-mismatch -Wno-missing-profile -g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -lpthread $PGO_USE"
 #
 export AR=/usr/bin/gcc-ar
 export RANLIB=/usr/bin/gcc-ranlib
@@ -208,18 +248,12 @@ export LDFLAGS="${LDFLAGS_GENERATE}"
 --enable-ft=yes \
 --enable-fc=yes \
 --enable-gl=yes \
---enable-egl=yes \
---enable-glx=yes \
 --enable-xlib-xcb=yes \
---enable-xcb-shm=yes \
---enable-qt=no \
---enable-png=yes \
 --enable-pthread=yes \
 --enable-test-surfaces=yes
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 
 make %{?_smp_mflags} check VERBOSE=1 V=1 || :
-exit 1
 make distclean || :
 make clean || :
 echo USED > statuspgo
@@ -239,22 +273,85 @@ export LDFLAGS="${LDFLAGS_USE}"
 --enable-ft=yes \
 --enable-fc=yes \
 --enable-gl=yes \
---enable-egl=yes \
---enable-glx=yes \
 --enable-xlib-xcb=yes \
---enable-xcb-shm=yes \
---enable-qt=no \
---enable-png=yes \
 --enable-pthread=yes \
 --enable-test-surfaces=yes
 make  %{?_smp_mflags}    V=1 VERBOSE=1
 fi
 
 
+%check
+export LANG=C.UTF-8
+unset http_proxy
+unset https_proxy
+unset no_proxy
+export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
+make %{?_smp_mflags} check || :
+
 %install
-export SOURCE_DATE_EPOCH=1623071579
+export SOURCE_DATE_EPOCH=1623074610
 rm -rf %{buildroot}
 %make_install
 
 %files
 %defattr(-,root,root,-)
+
+%files bin
+%defattr(-,root,root,-)
+/usr/bin/cairo-trace
+
+%files dev
+%defattr(-,root,root,-)
+/usr/include/cairo/cairo-deprecated.h
+/usr/include/cairo/cairo-features.h
+/usr/include/cairo/cairo-ft.h
+/usr/include/cairo/cairo-gl.h
+/usr/include/cairo/cairo-gobject.h
+/usr/include/cairo/cairo-pdf.h
+/usr/include/cairo/cairo-ps.h
+/usr/include/cairo/cairo-script-interpreter.h
+/usr/include/cairo/cairo-script.h
+/usr/include/cairo/cairo-svg.h
+/usr/include/cairo/cairo-version.h
+/usr/include/cairo/cairo-xcb.h
+/usr/include/cairo/cairo-xlib-xrender.h
+/usr/include/cairo/cairo-xlib.h
+/usr/include/cairo/cairo.h
+/usr/lib64/cairo/libcairo-trace.so
+/usr/lib64/libcairo-gobject.so
+/usr/lib64/libcairo-script-interpreter.so
+/usr/lib64/libcairo.so
+/usr/lib64/pkgconfig/cairo-egl.pc
+/usr/lib64/pkgconfig/cairo-fc.pc
+/usr/lib64/pkgconfig/cairo-ft.pc
+/usr/lib64/pkgconfig/cairo-gl.pc
+/usr/lib64/pkgconfig/cairo-glx.pc
+/usr/lib64/pkgconfig/cairo-gobject.pc
+/usr/lib64/pkgconfig/cairo-pdf.pc
+/usr/lib64/pkgconfig/cairo-png.pc
+/usr/lib64/pkgconfig/cairo-ps.pc
+/usr/lib64/pkgconfig/cairo-script-interpreter.pc
+/usr/lib64/pkgconfig/cairo-script.pc
+/usr/lib64/pkgconfig/cairo-svg.pc
+/usr/lib64/pkgconfig/cairo-xcb-shm.pc
+/usr/lib64/pkgconfig/cairo-xcb.pc
+/usr/lib64/pkgconfig/cairo-xlib-xcb.pc
+/usr/lib64/pkgconfig/cairo-xlib-xrender.pc
+/usr/lib64/pkgconfig/cairo-xlib.pc
+/usr/lib64/pkgconfig/cairo.pc
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/libcairo-gobject.so.2
+/usr/lib64/libcairo-gobject.so.2.11704.0
+/usr/lib64/libcairo-script-interpreter.so.2
+/usr/lib64/libcairo-script-interpreter.so.2.11704.0
+/usr/lib64/libcairo.so.2
+/usr/lib64/libcairo.so.2.11704.0
+
+%files staticdev
+%defattr(-,root,root,-)
+/usr/lib64/cairo/libcairo-trace.a
+/usr/lib64/libcairo-gobject.a
+/usr/lib64/libcairo-script-interpreter.a
+/usr/lib64/libcairo.a

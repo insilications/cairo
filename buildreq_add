@@ -57,6 +57,7 @@ gtk+-data
 gtk-doc
 gtk-doc-dev
 gtk+-lib
+gtk+-dev
 libdrm-dev
 libdrm-staticdev
 libjpeg-turbo-dev
