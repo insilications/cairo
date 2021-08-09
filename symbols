@@ -43,15 +43,6 @@ libcairo-script-interpreter.so.2:cairo_script_interpreter_reference
 libcairo-script-interpreter.so.2:cairo_script_interpreter_run
 libcairo-script-interpreter.so.2:cairo_script_interpreter_translate_stream
 libcairo.so.2:_cairo_gl_degrade_flavor_by_build_features
-libcairo.so.2:_cairo_test_base_compositor_surface_create
-libcairo.so.2:_cairo_test_fallback_compositor_surface_create
-libcairo.so.2:_cairo_test_mask_compositor_surface_create
-libcairo.so.2:_cairo_test_no_fallback_compositor_surface_create
-libcairo.so.2:_cairo_test_no_spans_compositor_surface_create
-libcairo.so.2:_cairo_test_no_traps_compositor_surface_create
-libcairo.so.2:_cairo_test_paginated_surface_create
-libcairo.so.2:_cairo_test_spans_compositor_surface_create
-libcairo.so.2:_cairo_test_traps_compositor_surface_create
 libcairo.so.2:cairo_append_path
 libcairo.so.2:cairo_arc
 libcairo.so.2:cairo_arc_negative
@@ -468,3 +459,7 @@ libcairo.so.2:cairo_xlib_surface_get_width
 libcairo.so.2:cairo_xlib_surface_get_xrender_format
 libcairo.so.2:cairo_xlib_surface_set_drawable
 libcairo.so.2:cairo_xlib_surface_set_size
+libcairo.so.2:cairo_xml_create
+libcairo.so.2:cairo_xml_create_for_stream
+libcairo.so.2:cairo_xml_for_recording_surface
+libcairo.so.2:cairo_xml_surface_create

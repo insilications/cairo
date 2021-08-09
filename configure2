@@ -9,3 +9,5 @@
 --enable-xlib-xcb=yes
 --enable-pthread=yes
 --enable-test-surfaces=yes
+--enable-test-surfaces
+--enable-full-testing

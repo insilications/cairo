@@ -4,6 +4,7 @@ amtk-dev
 buildreq-gnome
 cairo-dev
 cairomm-dev
+cairomm-staticdev
 caribou-dev
 cheese-dev
 clutter-dev
@@ -13,7 +14,6 @@ cogl-dev
 colord-gtk-dev
 compat-cairomm-soname10-dev
 compat-gtksourceview-soname3-dev
-compat-libhandy-0.0-dev
 compat-pangomm-soname14-dev
 devhelp-dev
 eog-dev

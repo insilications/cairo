@@ -1,47 +1,18 @@
 #
 # This file contains extra pkgconfig build requirements that don't get picked up but are
-# desirable. One name per line, no whitespace.
-#
-# qca-qt5
-# qca-qt5-dev
-# qt3d
-# qt3d-dev
-# qt5ct
-# qtbase
-# qtbase-dev
-# qtbase-extras
-# qtdatavis3d
-# qtdatavis3d-dev
-# qtdeclarative
-# qtdeclarative-dev
-# qtgraphicaleffects
-# qtimageformats
-# qtlocation
-# qtlocation-dev
-# qtmqtt
-# qtmqtt-dev
-# qtmultimedia
-# qtmultimedia-dev
-# qtnetworkauth
-# qtnetworkauth-dev
-# qtsvg
-# qtsvg-dev
-# qttools
-# qttools-dev
-# qttranslations
-# qtwayland
-# qtwayland-dev
-# qtx11extras
-# qtx11extras-dev
-# qtxmlpatterns
-# qtxmlpatterns-dev
-binutils-dev
+# desirable. One name per line, no whitespace.binutils-dev
 dbus
 dbus-broker
 dbus-dev
 dbus-glib
 dbus-glib-dev
 docbook-xml
+fontconfig-dev
+fontconfig-staticdev
+freetype-dev
+freetype-staticdev
+ghostscript
+ghostscript-dev
 glib-dev
 glib-lib
 glib-staticdev
@@ -60,8 +31,6 @@ gtk+-dev
 gtk-doc
 gtk-doc-dev
 gtk+-lib
-libdrm-dev
-libdrm-staticdev
 libjpeg-turbo-dev
 libjpeg-turbo-staticdev
 libpng-dev
@@ -81,6 +50,8 @@ mesa-dev
 pixman-dev
 pixman-staticdev
 pkg-config
+poppler
+poppler-dev
 python-graphviz
 systemd-dev
 xauth
